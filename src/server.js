@@ -1,10 +1,14 @@
-const hapi = require('@hapi/hapi');
+/* eslint-disable */
+
+const hapi = require("@hapi/hapi");
+const routes = require("./routes");
 
 const init = async () => {
   const server = hapi.server({
     port: 9000,
-    host: 'localhost',
+    host: "localhost",
   });
+  server.route(routes);
 
   await server.start();
   console.log(`Server running on ${server.info.uri} `);
