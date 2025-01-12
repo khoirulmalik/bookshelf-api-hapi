@@ -1,5 +1,10 @@
 /* eslint-disable */
-const { addBookHandler, getAllBook, getBookById } = require("./handler");
+const {
+  addBookHandler,
+  getAllBook,
+  getBookById,
+  editBookByHandler,
+} = require("./handler");
 
 const routes = [
   {
@@ -16,6 +21,11 @@ const routes = [
     method: "GET",
     path: "/books/{id}",
     handler: getBookById,
+  },
+  {
+    method: "PUT",
+    path: "/books/{id}",
+    handler: editBookByHandler,
   },
 ];
 
