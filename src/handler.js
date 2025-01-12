@@ -1,6 +1,7 @@
+/* eslint-disable */
 
-const { nanoid } = require('nanoid');
-const books = require('./books');
+const { nanoid } = require("nanoid");
+const books = require("./books");
 
 const addBookHandler = (req, h) => {
   const {
@@ -25,8 +26,8 @@ const addBookHandler = (req, h) => {
   if (!name) {
     return h
       .response({
-        status: 'fail',
-        message: 'Gagal menambahkan buku. Mohon isi nama buku',
+        status: "fail",
+        message: "Gagal menambahkan buku. Mohon isi nama buku",
       })
       .code(400);
   }
@@ -34,9 +35,9 @@ const addBookHandler = (req, h) => {
   if (readPage > pageCount) {
     return h
       .response({
-        status: 'fail',
+        status: "fail",
         message:
-          'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
+          "Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount",
       })
       .code(400);
   }
@@ -60,8 +61,8 @@ const addBookHandler = (req, h) => {
   const isSuccess = books.filter((book) => book.id === id).length > 0;
   if (isSuccess) {
     const response = h.response({
-      status: 'success',
-      message: 'Buku berhasil ditambahkan',
+      status: "success",
+      message: "Buku berhasil ditambahkan",
       data: {
         bookId: id,
       },
@@ -72,10 +73,32 @@ const addBookHandler = (req, h) => {
   }
 
   const response = h.response({
-    status: 'fail',
-    message: 'Gagal Menambahkan Buku',
+    status: "fail",
+    message: "Gagal Menambahkan Buku",
   });
   response.code(400);
 };
 
-module.exports = { addBookHandler };
+const getAllBook = (request, h) => {
+  const displayBooks = books.map((item) => {
+    const container = {};
+
+    container.id = item.id;
+    container.name = item.name;
+    container.publisher = item.publisher;
+
+    return container;
+  });
+
+  const response = h.response({
+    status: "success",
+    data: {
+      books: displayBooks,
+    },
+  });
+
+  response.code(201);
+  return response;
+};
+
+module.exports = { addBookHandler, getAllBook };
