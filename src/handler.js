@@ -101,4 +101,36 @@ const getAllBook = (request, h) => {
   return response;
 };
 
-module.exports = { addBookHandler, getAllBook };
+const getBookById = (req, h) => {
+  const { id } = req.params;
+
+  const findBook = (book) => {
+    if (book.id === id) {
+      return book.id;
+    }
+  };
+
+  const isSucces = books.find(findBook);
+
+  if (!isSucces) {
+    const response = h.response({
+      status: "Fail",
+      message: "Buku Tidak Ditemukan",
+    });
+
+    response.code(404);
+    return response;
+  }
+
+  const response = h.response({
+    status: "Succes",
+    message: "Buku Berhasi Ditemukan",
+    data: {
+      book: isSucces,
+    },
+  });
+  response.code(201);
+  return response;
+};
+
+module.exports = { addBookHandler, getAllBook, getBookById };
